@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Billetera Digital · Crear clave</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="telefono">
+  <div class="pantalla">
+    <div class="isla"></div>
+    <div class="barra-estado" aria-hidden="true">
+      <span data-hora>9:41</span>
+      <span class="iconos">
+        <svg viewBox="0 0 24 24"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/><path d="M6 11v2"/><path d="M10 11v2"/><path d="M14 11v2"/></svg>
+      </span>
+    </div>
+
+    <div class="app">
+      <main class="main centro">
+        <div class="centrado">
+          <div class="exito"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
+        </div>
+        <div class="centrado">
+          <h1 class="titulo">¡Casi listo, Lucía!</h1>
+          <p class="subtitulo">Crea tu clave de 6 dígitos</p>
+        </div>
+
+        <form class="card" data-ir="index.html" novalidate>
+          <div class="campo">
+            <label for="clave">Clave</label>
+            <input id="clave" class="pin" name="clave" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="••••••" required autocomplete="off">
+          </div>
+          <div class="campo">
+            <label for="repetir">Repite tu clave</label>
+            <input id="repetir" class="pin" name="repetir" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="••••••" required autocomplete="off">
+          </div>
+          <button class="btn" type="submit">Crear cuenta</button>
+        </form>
+      </main>
+    </div>
+
+    <div class="loader on" role="status" aria-label="Cargando"><div class="spinner"></div></div>
+    <div class="indicador-inicio" aria-hidden="true"></div>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+<script>
+  var clave = document.getElementById('clave');
+  var repetir = document.getElementById('repetir');
+  function comparar() { repetir.setCustomValidity(repetir.value === clave.value ? '' : 'Las claves no coinciden'); }
+  clave.addEventListener('input', comparar);
+  repetir.addEventListener('input', comparar);
+</script>
+</body>
+</html>

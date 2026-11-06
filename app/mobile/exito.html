@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Billetera Digital · Transferencia exitosa</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="telefono">
+  <div class="pantalla">
+    <div class="isla"></div>
+    <div class="barra-estado" aria-hidden="true">
+      <span data-hora>9:41</span>
+      <span class="iconos">
+        <svg viewBox="0 0 24 24"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/><path d="M6 11v2"/><path d="M10 11v2"/><path d="M14 11v2"/></svg>
+      </span>
+    </div>
+
+    <div class="app">
+      <main class="main centro">
+        <div class="exito"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div class="centrado">
+          <h1 class="titulo">¡Transferencia exitosa!</h1>
+          <p class="subtitulo">Tu dinero ya llegó 🎉</p>
+        </div>
+
+        <section class="card">
+          <div class="filas">
+            <div class="fila"><span>Monto</span><strong id="monto">S/ 0.00</strong></div>
+            <div class="fila"><span>Para</span><strong id="para">—</strong></div>
+            <div class="fila"><span>Fecha y hora</span><strong id="fecha">—</strong></div>
+            <div class="fila"><span>N.º de operación</span><strong id="codigo">—</strong></div>
+            <div class="fila"><span>Saldo actual</span><strong data-bd="saldo" data-soles>S/ 0.00</strong></div>
+          </div>
+        </section>
+
+        <div class="acciones">
+          <button class="btn" type="button" data-ir="inicio.html">Volver al inicio</button>
+        </div>
+      </main>
+    </div>
+
+    <div class="loader on" role="status" aria-label="Cargando"><div class="spinner"></div></div>
+    <div class="indicador-inicio" aria-hidden="true"></div>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+<script>
+  var op = BD.get('operacion', null);
+  if (op) {
+    document.getElementById('monto').textContent = BD.soles(op.monto);
+    document.getElementById('para').textContent = op.para;
+    document.getElementById('fecha').textContent = op.fecha;
+    document.getElementById('codigo').textContent = op.codigo;
+  }
+</script>
+</body>
+</html>

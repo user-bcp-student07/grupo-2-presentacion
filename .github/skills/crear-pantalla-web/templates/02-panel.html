@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Billetera Digital · Inicio</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="telefono">
+  <div class="pantalla">
+    <div class="isla"></div>
+    <div class="barra-estado" aria-hidden="true">
+      <span data-hora>9:41</span>
+      <span class="iconos">
+        <svg viewBox="0 0 24 24"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/><path d="M6 11v2"/><path d="M10 11v2"/><path d="M14 11v2"/></svg>
+      </span>
+    </div>
+
+    <!-- CONTENIDO DE LA PANTALLA: todo lo que se muestre va dentro de .app -->
+    <div class="app">
+      <div class="topbar">
+        <div class="marca">
+          <span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg></span>
+          Billetera Digital
+        </div>
+      </div>
+
+      <main class="main">
+        <section class="card violeta">
+          <span class="subtitulo">Tu saldo</span>
+          <div class="saldo" data-bd="saldo" data-soles>S/ 1,250.00</div>
+        </section>
+
+        <section class="grid-3">
+          <a class="atajo" href="03-transferir.html"><span class="icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg></span>Enviar</a>
+          <a class="atajo" href="04-recargar.html"><span class="icono turquesa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>Recargar</a>
+          <a class="atajo" href="05-movimientos.html"><span class="icono amarillo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>Historial</a>
+        </section>
+
+        <section class="card">
+          <strong>Últimos movimientos</strong>
+          <ul class="lista">
+            <li class="item"><span class="icono rosa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></span><div class="texto"><strong>Ana Torres</strong><span>Hoy</span></div><span class="monto negativo">- S/ 40.00</span></li>
+            <li class="item"><span class="icono turquesa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></span><div class="texto"><strong>Recarga</strong><span>Ayer</span></div><span class="monto positivo">+ S/ 100.00</span></li>
+          </ul>
+        </section>
+      </main>
+    </div>
+
+    <div class="loader on" role="status" aria-label="Cargando"><div class="spinner"></div></div>
+    <div class="indicador-inicio" aria-hidden="true"></div>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

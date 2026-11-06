@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Billetera Digital · Ingresar</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="telefono">
+  <div class="pantalla">
+    <div class="isla"></div>
+    <div class="barra-estado" aria-hidden="true">
+      <span data-hora>9:41</span>
+      <span class="iconos">
+        <svg viewBox="0 0 24 24"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/><path d="M6 11v2"/><path d="M10 11v2"/><path d="M14 11v2"/></svg>
+      </span>
+    </div>
+
+    <!-- CONTENIDO DE LA PANTALLA: todo lo que se muestre va dentro de .app -->
+    <div class="app">
+      <div class="topbar">
+        <div class="marca">
+          <span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg></span>
+          Billetera Digital
+        </div>
+      </div>
+
+      <main class="main centro">
+        <div>
+          <h2 class="titulo">¡Hola! 👋</h2>
+          <p class="subtitulo">Ingresa tu DNI para empezar</p>
+        </div>
+
+        <form class="card" data-ir="02-panel.html" novalidate>
+          <div class="campo">
+            <label for="dni">DNI</label>
+            <input id="dni" name="dni" type="text" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" placeholder="12345678" required autocomplete="off">
+            <span class="ayuda">8 dígitos, sin espacios</span>
+          </div>
+          <button class="btn" type="submit">Continuar</button>
+        </form>
+      </main>
+    </div>
+
+    <div class="loader on" role="status" aria-label="Cargando"><div class="spinner"></div></div>
+    <div class="indicador-inicio" aria-hidden="true"></div>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

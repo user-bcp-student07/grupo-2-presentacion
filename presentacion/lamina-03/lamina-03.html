@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Arquitectura de la Billetera Digital</title>
+<link rel="stylesheet" href="../../.github/skills/lamina-corporativa-jpg/assets/slide.css">
+<style>
+  .arch { position: relative; width: 1728px; height: 700px; }
+  .arch .node { position: absolute; height: auto; }
+  .arch svg.links { position: absolute; left: 0; top: 0; width: 1728px; height: 700px; }
+  .arch .legend { position: absolute; left: 0; bottom: 0; }
+</style>
+</head>
+<body>
+<section class="slide">
+  <header class="slide-header">
+    <div class="eyebrow">Arquitectura</div>
+    <h1 class="slide-title">Arquitectura de la Billetera Digital</h1>
+  </header>
+
+  <div class="slide-body">
+    <div class="arch">
+      <svg class="links" viewBox="0 0 1728 700" aria-hidden="true">
+        <defs>
+          <marker id="head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
+            <path d="M0 0 L10 5 L0 10 z" fill="#5A6877"></path>
+          </marker>
+        </defs>
+        <g fill="none" stroke="#5A6877" stroke-width="2" marker-end="url(#head)">
+          <!-- Usuario -> Billetera -->
+          <path d="M160 210 H247"></path>
+          <!-- Billetera -> API Billetera -->
+          <path d="M507 210 H594"></path>
+          <!-- API Billetera -> API RENIEC -->
+          <path d="M934 210 H977 V85 H1021"></path>
+          <!-- API Billetera -> API Core Bancario -->
+          <path d="M934 210 H977 V305 H1021"></path>
+          <!-- API Core Bancario -> API Fraudes -->
+          <path d="M1341 305 H1428"></path>
+          <!-- API Billetera -> Logs -->
+          <path d="M680 320 V460"></path>
+          <!-- API Billetera -> Base de Datos -->
+          <path d="M850 320 V460"></path>
+        </g>
+      </svg>
+
+      <div class="node external" style="left:0; top:135px; width:160px; height:150px;">
+        <!-- Icono User Round de Lucide: https://lucide.dev/icons/user-round -->
+        <svg aria-hidden="true" focusable="false" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#1F5FBF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="5"></circle>
+          <path d="M20 21a8 8 0 0 0-16 0"></path>
+        </svg>
+        <div class="node-name">Usuario</div>
+      </div>
+
+      <div class="node accent" style="left:247px; top:120px; width:260px; height:180px;">
+        <div class="node-name">Billetera</div>
+        <div class="node-desc">Aplicación Web</div>
+        <div class="node-desc">React</div>
+        <div class="node-desc">Responsive</div>
+      </div>
+
+      <div class="node primary" style="left:594px; top:100px; width:340px; height:220px;">
+        <div class="node-name">API Billetera</div>
+        <div class="node-desc">API UX específico para el canal Billetera</div>
+        <div class="node-desc">Python 3.15</div>
+        <div class="node-desc">FastAPI</div>
+        <div class="node-desc">uv (gestor de paquetes)</div>
+      </div>
+
+      <div class="node external" style="left:1021px; top:0; width:320px; height:170px;">
+        <div class="node-name">API RENIEC</div>
+        <div class="node-desc">Validación de DNI</div>
+        <div class="node-desc">Reconocimiento facial</div>
+      </div>
+
+      <div class="node external" style="left:1021px; top:230px; width:320px; height:150px;">
+        <div class="node-name">API Core Bancario</div>
+        <div class="node-desc">Transacción de Transferencias</div>
+      </div>
+
+      <div class="node external" style="left:1428px; top:230px; width:300px; height:150px;">
+        <div class="node-name">API Fraudes</div>
+        <div class="node-desc">Bloqueo de Tx sospechosas</div>
+      </div>
+
+      <div class="node" style="left:500px; top:460px; width:260px; height:130px;">
+        <div class="node-name">Logs</div>
+        <div class="node-desc">Registro de transacciones</div>
+      </div>
+
+      <div class="node" style="left:790px; top:460px; width:260px; height:130px;">
+        <div class="node-name">Base de Datos</div>
+        <div class="node-desc">SQLite (hackaton)</div>
+      </div>
+
+      <div class="legend">
+        <span><i class="l-primary"></i>Servicio propio</span>
+        <span><i class="l-accent"></i>Aplicación</span>
+        <span><i></i>Datos</span>
+        <span><i class="l-ext"></i>Externo</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-footer"><span>Billetera Digital</span><span></span></div>
+</section>
+</body>
+</html>

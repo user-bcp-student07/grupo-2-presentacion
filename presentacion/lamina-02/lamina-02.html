@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Un equipo de agentes, con control humano</title>
+<link rel="stylesheet" href="../../.github/skills/lamina-corporativa-jpg/assets/slide.css">
+<style>
+  .stages { display: grid; grid-template-columns: repeat(6, 1fr); column-gap: 40px; }
+  .stage { position: relative; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .stage .node { width: 100%; height: 104px; flex: none; }
+  .stage:not(:last-child)::after {
+    content: ""; position: absolute; right: -27px; top: 44px; width: 12px; height: 12px;
+    border-top: 3px solid var(--ink-600); border-right: 3px solid var(--ink-600); transform: rotate(45deg);
+  }
+  .approval { display: flex; align-items: center; gap: 8px; height: 32px; font-size: 20px; font-weight: 600; color: var(--blue-600); }
+  .approval svg { flex: none; }
+  .chips { display: flex; flex-wrap: wrap; gap: 16px; }
+  .chip { font-size: 22px; color: var(--navy-700); background: var(--blue-100); border-radius: var(--radius); padding: 6px 18px; }
+  .stats { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: var(--gap); height: 400px; flex: none; margin-top: 8px; }
+  .stats .card { justify-content: center; gap: 20px; }
+  .stat-value { white-space: nowrap; }
+</style>
+</head>
+<body>
+<section class="slide">
+  <header class="slide-header">
+    <div class="eyebrow">Cómo lo construimos</div>
+    <h1 class="slide-title">Un equipo de agentes, con control humano</h1>
+  </header>
+
+  <div class="slide-body">
+    <div class="stages">
+      <div class="stage">
+        <div class="node accent"><div class="node-name">Requerimientos<br>+ diseño</div></div>
+        <div class="approval"></div>
+      </div>
+      <div class="stage">
+        <div class="node accent"><div class="node-name">Discovery</div></div>
+        <div class="approval">
+          <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1F5FBF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>
+          aprueba una persona
+        </div>
+      </div>
+      <div class="stage">
+        <div class="node accent"><div class="node-name">Spec OpenSpec</div></div>
+        <div class="approval">
+          <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1F5FBF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>
+          aprueba una persona
+        </div>
+      </div>
+      <div class="stage">
+        <div class="node alt"><div class="node-name">TDD · Developer</div></div>
+        <div class="approval"></div>
+      </div>
+      <div class="stage">
+        <div class="node alt"><div class="node-name">QA + Reviewer</div></div>
+        <div class="approval"></div>
+      </div>
+      <div class="stage">
+        <div class="node primary"><div class="node-name">PR + CI</div></div>
+        <div class="approval">
+          <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1F5FBF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></svg>
+          aprueba una persona
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="card">
+        <h2 class="card-title">Gates deterministas en cada PR</h2>
+        <div class="chips">
+          <span class="chip">hitl</span>
+          <span class="chip">openspec</span>
+          <span class="chip">tasks</span>
+          <span class="chip">tests</span>
+          <span class="chip">trazabilidad</span>
+          <span class="chip">arquitectura DDD</span>
+          <span class="chip">naming (inglés)</span>
+          <span class="chip">evidencia</span>
+        </div>
+        <p class="card-text">Las decisiones críticas no dependen del LLM: scripts y CI las verifican. 6 agentes · skills · GitHub MCP · OpenSpec.</p>
+      </div>
+      <div class="card plain">
+        <div class="kpi-value stat-value">110</div>
+        <div class="kpi-label">tests en la suite tras S0, W1 y W2, en verde</div>
+      </div>
+      <div class="card plain">
+        <div class="kpi-value stat-value">100/100</div>
+        <div class="kpi-label">gates por historia y CI verde</div>
+      </div>
+      <div class="card plain">
+        <div class="kpi-value stat-value">15+</div>
+        <div class="kpi-label">mejoras del harness nacidas de fallas reales</div>
+      </div>
+    </div>
+
+    <div class="legend" style="margin-top:auto;">
+      <span><i class="l-accent"></i>Especificación</span>
+      <span><i class="l-alt"></i>Construcción</span>
+      <span><i class="l-primary"></i>Entrega</span>
+    </div>
+  </div>
+
+  <div class="slide-footer"><span>Billetera Digital</span><span></span></div>
+</section>
+</body>
+</html>

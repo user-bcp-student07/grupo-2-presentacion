@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Billetera Digital · Inicio</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="telefono">
+  <div class="pantalla">
+    <div class="isla"></div>
+    <div class="barra-estado" aria-hidden="true">
+      <span data-hora>9:41</span>
+      <span class="iconos">
+        <svg viewBox="0 0 24 24"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/><path d="M6 11v2"/><path d="M10 11v2"/><path d="M14 11v2"/></svg>
+      </span>
+    </div>
+
+    <div class="app">
+      <div class="topbar">
+        <h1>Hola, <span data-bd="nombre">Lucía</span> 👋</h1>
+        <button class="icon-btn" type="button" data-ir="index.html" aria-label="Salir"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg></button>
+      </div>
+
+      <main class="main">
+        <section class="card violeta">
+          <span class="subtitulo">Tu saldo actual</span>
+          <div class="saldo" data-bd="saldo" data-soles>S/ 1,250.00</div>
+        </section>
+
+        <section class="card">
+          <div>
+            <strong>Tus contactos</strong>
+            <p class="subtitulo">Elige a quién quieres enviar dinero</p>
+          </div>
+          <div class="filas" id="contactos">
+            <button class="contacto" type="button" data-nombre="Ana Torres" data-ir="transferir.html">
+              <span class="icono rosa txt">AT</span><div class="texto"><strong>Ana Torres</strong></div>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+            <button class="contacto" type="button" data-nombre="Luis Paredes" data-ir="transferir.html">
+              <span class="icono turquesa txt">LP</span><div class="texto"><strong>Luis Paredes</strong></div>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+            <button class="contacto" type="button" data-nombre="María Quispe" data-ir="transferir.html">
+              <span class="icono amarillo txt">MQ</span><div class="texto"><strong>María Quispe</strong></div>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+            <button class="contacto" type="button" data-nombre="Carlos Díaz" data-ir="transferir.html">
+              <span class="icono txt">CD</span><div class="texto"><strong>Carlos Díaz</strong></div>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="loader on" role="status" aria-label="Cargando"><div class="spinner"></div></div>
+    <div class="indicador-inicio" aria-hidden="true"></div>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+<script>
+  document.getElementById('contactos').addEventListener('click', function (e) {
+    var fila = e.target.closest('.contacto');
+    if (!fila) { return; }
+    BD.set('contacto', {
+      nombre: fila.getAttribute('data-nombre'),
+      iniciales: fila.querySelector('.icono').textContent,
+      color: (fila.querySelector('.icono').className.match(/rosa|turquesa|amarillo/) || [''])[0]
+    });
+  });
+</script>
+</body>
+</html>

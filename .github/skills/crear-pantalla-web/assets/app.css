@@ -1,0 +1,256 @@
+/* Billetera Digital — estilos compartidos de todas las pantallas.
+   La app se muestra dentro de un emulador de celular. Todo el contenido vive en .pantalla
+   y se dimensiona con unidades de contenedor (cqh) para que quepa sin scroll. */
+
+:root {
+  --violeta: #6C4DF6;
+  --violeta-osc: #4A30C9;
+  --violeta-claro: #EFEBFF;
+  --rosa: #FF4F9A;
+  --rosa-claro: #FFE3EF;
+  --turquesa: #19C3B1;
+  --turquesa-claro: #D9F6F2;
+  --amarillo: #FFC83D;
+  --amarillo-claro: #FFF1CC;
+  --tinta: #221A47;
+  --tinta-suave: #6E6892;
+  --linea: #E3DEF7;
+  --fondo: #F6F3FF;
+  --blanco: #FFFFFF;
+  --error: #E5384F;
+  --carcasa: #1B1533;
+
+  --fuente: "Segoe UI", "Trebuchet MS", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --radio: 20px;
+  --radio-sm: 14px;
+  --gap: clamp(8px, 2cqh, 16px);
+  --texto: clamp(15px, 2.2cqh, 18px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden; /* sin scroll vertical ni horizontal */
+}
+
+body {
+  font-family: var(--fuente);
+  line-height: 1.35;
+  color: var(--tinta);
+  -webkit-font-smoothing: antialiased;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #E9E2FF 0%, #FFE3EF 55%, #D9F6F2 100%);
+}
+
+/* ---------- Emulador de celular ---------- */
+.telefono {
+  position: relative;
+  height: min(96dvh, 900px);
+  aspect-ratio: 9 / 18.5;
+  max-width: 96vw;
+  padding: 12px;
+  border-radius: 52px;
+  background: var(--carcasa);
+  box-shadow: 0 30px 60px rgba(34, 26, 71, .35), inset 0 0 0 2px #3A3066;
+}
+.telefono::before, .telefono::after { /* botones laterales */
+  content: ""; position: absolute; width: 4px; border-radius: 2px; background: #2C2450;
+}
+.telefono::before { left: -4px; top: 18%; height: 8%; }
+.telefono::after { right: -4px; top: 24%; height: 12%; }
+
+.pantalla {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 40px;
+  container-type: size;
+  background:
+    radial-gradient(circle at 12% 8%, var(--rosa-claro) 0, transparent 38%),
+    radial-gradient(circle at 92% 92%, var(--turquesa-claro) 0, transparent 40%),
+    var(--fondo);
+}
+.isla { /* cámara frontal */
+  position: absolute; z-index: 5; top: 10px; left: 50%; transform: translateX(-50%);
+  width: 92px; height: 26px; border-radius: 20px; background: var(--carcasa);
+}
+.barra-estado {
+  flex: none; height: 48px; display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 28px 0; font-size: 14px; font-weight: 700;
+}
+.barra-estado .iconos { display: flex; align-items: center; gap: 6px; }
+.barra-estado svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.indicador-inicio { flex: none; height: 22px; display: grid; place-items: center; }
+.indicador-inicio::after { content: ""; width: 110px; height: 5px; border-radius: 3px; background: var(--tinta); opacity: .85; }
+
+/* En un celular real (pantalla angosta) se usa toda la pantalla, sin marco */
+@media (max-width: 500px) {
+  body { place-items: stretch; background: var(--fondo); }
+  .telefono { height: 100dvh; width: 100%; max-width: none; aspect-ratio: auto; padding: 0; border-radius: 0; background: none; box-shadow: none; }
+  .telefono::before, .telefono::after, .isla, .barra-estado, .indicador-inicio { display: none; }
+  .pantalla { border-radius: 0; }
+  .app { padding-top: max(12px, env(safe-area-inset-top)); padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+}
+
+/* ---------- Estructura de pantalla ---------- */
+.app {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  padding: clamp(8px, 2cqh, 16px) 20px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  font-size: var(--texto);
+}
+.main { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: var(--gap); }
+.main.centro { justify-content: center; }
+.acciones { display: flex; flex-direction: column; gap: 10px; flex: none; }
+
+.topbar { display: flex; align-items: center; gap: 12px; flex: none; }
+.topbar h1 { font-size: clamp(20px, 3.2cqh, 26px); font-weight: 700; flex: 1; }
+.icon-btn {
+  width: 44px; height: 44px; flex: none; border-radius: 50%;
+  background: var(--blanco); color: var(--violeta); cursor: pointer;
+  display: grid; place-items: center; border: 1.5px solid var(--linea);
+}
+.icon-btn svg, .btn svg, .icono svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.marca { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: clamp(20px, 3.2cqh, 26px); color: var(--violeta); }
+.marca .logo { width: 40px; height: 40px; border-radius: 12px; background: var(--violeta); color: var(--blanco); display: grid; place-items: center; }
+.marca .logo svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.titulo { font-size: clamp(24px, 4.2cqh, 34px); font-weight: 800; line-height: 1.15; }
+.subtitulo { color: var(--tinta-suave); }
+
+/* ---------- Tarjetas ---------- */
+.card {
+  background: var(--blanco); border-radius: var(--radio); padding: clamp(14px, 2.5cqh, 22px);
+  border: 1.5px solid var(--linea); display: flex; flex-direction: column; gap: var(--gap);
+}
+.card.violeta { background: var(--violeta); border-color: var(--violeta); color: var(--blanco); }
+.card.violeta .subtitulo { color: #D9D0FF; }
+.saldo { font-size: clamp(32px, 6cqh, 46px); font-weight: 800; line-height: 1.1; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+
+/* Acceso rápido (icono + etiqueta) */
+.atajo {
+  display: flex; flex-direction: column; align-items: center; gap: 8px; padding: clamp(10px, 2cqh, 16px) 6px;
+  background: var(--blanco); border: 1.5px solid var(--linea); border-radius: var(--radio);
+  font: inherit; font-weight: 600; font-size: clamp(13px, 1.9cqh, 15px); color: var(--tinta); cursor: pointer; text-decoration: none;
+}
+.icono { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: var(--violeta-claro); color: var(--violeta); flex: none; }
+.icono.rosa { background: var(--rosa-claro); color: var(--rosa); }
+.icono.turquesa { background: var(--turquesa-claro); color: #0E9A8B; }
+.icono.amarillo { background: var(--amarillo-claro); color: #B98300; }
+
+/* Lista de movimientos / contactos */
+.lista { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+.item { display: flex; align-items: center; gap: 12px; }
+.item .texto { flex: 1; min-width: 0; }
+.item .texto strong { display: block; font-weight: 700; }
+.item .texto span { color: var(--tinta-suave); font-size: 0.9em; }
+.monto { font-weight: 700; }
+.monto.positivo { color: #0E9A8B; }
+.monto.negativo { color: var(--rosa); }
+
+/* ---------- Formularios ---------- */
+.campo { display: flex; flex-direction: column; gap: 6px; }
+.campo label { font-weight: 600; font-size: 0.95em; }
+.campo input, .campo select, .campo textarea {
+  width: 100%; font: inherit; color: var(--tinta); background: var(--blanco);
+  border: 2px solid var(--linea); border-radius: var(--radio-sm);
+  padding: clamp(10px, 1.8cqh, 14px) 14px; outline: none;
+}
+.campo input:focus, .campo select:focus, .campo textarea:focus { border-color: var(--violeta); box-shadow: 0 0 0 4px var(--violeta-claro); }
+.campo .ayuda { color: var(--tinta-suave); font-size: 0.85em; }
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
+  font: inherit; font-weight: 700; padding: clamp(12px, 2cqh, 16px) 20px; border-radius: var(--radio-sm);
+  border: 2px solid transparent; cursor: pointer; text-decoration: none; background: var(--violeta); color: var(--blanco);
+  transition: transform .1s ease, background .15s ease;
+}
+.btn:hover { background: var(--violeta-osc); }
+.btn:active { transform: scale(.98); }
+.btn.rosa { background: var(--rosa); }
+.btn.rosa:hover { background: #E63C86; }
+.btn.secundario { background: var(--blanco); color: var(--violeta); border-color: var(--violeta); }
+.btn.secundario:hover { background: var(--violeta-claro); }
+.btn.texto { background: transparent; color: var(--violeta); }
+.btn:focus-visible, .icon-btn:focus-visible, .atajo:focus-visible { outline: 3px solid var(--amarillo); outline-offset: 2px; }
+
+/* ---------- Etiquetas y estados ---------- */
+.chip { display: inline-block; padding: 4px 12px; border-radius: 999px; font-weight: 600; font-size: 0.85em; background: var(--turquesa-claro); color: #0E9A8B; }
+.chip.rosa { background: var(--rosa-claro); color: var(--rosa); }
+.chip.amarillo { background: var(--amarillo-claro); color: #B98300; }
+.exito { display: grid; place-items: center; width: clamp(72px, 14cqh, 112px); height: clamp(72px, 14cqh, 112px); border-radius: 50%; background: var(--turquesa-claro); color: #0E9A8B; margin: 0 auto; }
+.exito svg { width: 50%; height: 50%; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.centrado { text-align: center; }
+
+/* Barra de navegación inferior */
+.tabbar { display: flex; gap: 6px; background: var(--blanco); border: 1.5px solid var(--linea); border-radius: var(--radio); padding: 6px; flex: none; }
+.tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 4px; border-radius: var(--radio-sm); text-decoration: none; color: var(--tinta-suave); font-size: 0.8em; font-weight: 600; }
+.tabbar a svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tabbar a.activo { background: var(--violeta-claro); color: var(--violeta); }
+
+/* ---------- Indicador de carga (0,5 s), solo sobre la pantalla del celular ---------- */
+.loader {
+  position: absolute; inset: 0; z-index: 4; display: grid; place-items: center;
+  background: rgba(246, 243, 255, .82); opacity: 0; visibility: hidden; transition: opacity .12s ease;
+}
+.loader.on { opacity: 1; visibility: visible; }
+.spinner { width: 56px; height: 56px; border-radius: 50%; border: 6px solid var(--violeta-claro); border-top-color: var(--violeta); border-right-color: var(--rosa); animation: giro .7s linear infinite; }
+@keyframes giro { to { transform: rotate(360deg); } }
+
+/* ---------- Visor de cámara simulado (escaneo de DNI / rostro) ---------- */
+.visor { flex: 1; min-height: 0; border-radius: var(--radio); background: var(--carcasa); position: relative; overflow: hidden; display: grid; place-items: center; color: var(--blanco); }
+.visor .marco { width: 78%; aspect-ratio: 1.6; border: 3px dashed rgba(255, 255, 255, .7); border-radius: 16px; display: grid; place-items: center; max-height: 70%; }
+.visor.rostro .marco { width: auto; height: 68%; max-height: none; aspect-ratio: .78; border-radius: 50%; }
+.visor .marco svg { width: 44%; height: 44%; fill: none; stroke: rgba(255, 255, 255, .85); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.visor .ico-ok, .visor .ico-err { display: none; }
+.visor .barrido { position: absolute; left: 11%; right: 11%; top: 22%; height: 3px; border-radius: 2px; background: var(--turquesa); box-shadow: 0 0 14px var(--turquesa); opacity: 0; }
+.visor.rostro .barrido { left: 24%; right: 24%; }
+.visor.escaneando .barrido { opacity: 1; animation: barrido 1.1s ease-in-out infinite alternate; }
+@keyframes barrido { from { top: 22%; } to { top: 78%; } }
+.visor.listo .marco { border-style: solid; border-color: var(--turquesa); }
+.visor.listo .ico-base, .visor.error .ico-base { display: none; }
+.visor.listo .ico-ok { display: block; stroke: var(--turquesa); }
+.visor.error .marco { border-style: solid; border-color: var(--rosa); }
+.visor.error .ico-err { display: block; stroke: var(--rosa); }
+.visor .estado { position: absolute; left: 12px; right: 12px; bottom: 12px; text-align: center; font-weight: 600; font-size: .9em; }
+.campo input.pin { text-align: center; letter-spacing: .5em; font-size: 1.4em; font-weight: 700; }
+.pasos { display: flex; gap: 6px; flex: none; }
+.pasos i { flex: 1; height: 6px; border-radius: 3px; background: var(--linea); }
+.pasos i.hecho { background: var(--violeta); }
+[hidden] { display: none !important; }
+.aviso { background: var(--rosa-claro); color: #B3124F; border-radius: var(--radio-sm); padding: 10px 14px; font-weight: 600; font-size: .9em; }
+.contacto { display: flex; align-items: center; gap: 12px; width: 100%; background: none; border: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; padding: 6px; border-radius: var(--radio-sm); }
+.contacto:hover { background: var(--violeta-claro); }
+.contacto .texto { flex: 1; min-width: 0; }
+.contacto:focus-visible { outline: 3px solid var(--amarillo); outline-offset: 2px; }
+.contacto > svg { width: 20px; height: 20px; fill: none; stroke: var(--tinta-suave); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.icono.txt { font-weight: 800; font-size: 1.05em; }
+.filas { display: flex; flex-direction: column; gap: 10px; }
+.fila { display: flex; justify-content: space-between; gap: 12px; }
+.fila span { color: var(--tinta-suave); }
+.fila strong { text-align: right; }
+.prefijo { position: relative; }
+.prefijo b { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--tinta-suave); }
+.prefijo input { padding-left: 44px; }
+
+/* Pantallas bajas (portátiles, proyectores): compactar para no hacer scroll */
+@container (max-height: 700px) {
+  .app { padding-top: 6px; padding-bottom: 6px; }
+  .icono { width: 38px; height: 38px; }
+  .exito { width: 64px; height: 64px; }
+}
+@media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 1.6s; } .btn { transition: none; } }

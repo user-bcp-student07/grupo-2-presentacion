@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Billetera Digital · Transferir</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="telefono">
+  <div class="pantalla">
+    <div class="isla"></div>
+    <div class="barra-estado" aria-hidden="true">
+      <span data-hora>9:41</span>
+      <span class="iconos">
+        <svg viewBox="0 0 24 24"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/><path d="M6 11v2"/><path d="M10 11v2"/><path d="M14 11v2"/></svg>
+      </span>
+    </div>
+
+    <div class="app">
+      <div class="topbar">
+        <button class="icon-btn" type="button" data-ir="atras" aria-label="Volver"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></button>
+        <h1>Transferir</h1>
+      </div>
+
+      <main class="main">
+        <section class="card">
+          <span class="subtitulo">Enviar a</span>
+          <div class="item">
+            <span class="icono txt" id="avatar">AT</span>
+            <div class="texto"><strong id="nombre">Ana Torres</strong></div>
+          </div>
+        </section>
+
+        <form class="card" id="form" novalidate>
+          <div class="campo">
+            <label for="monto">Monto a transferir</label>
+            <div class="prefijo">
+              <b>S/</b>
+              <input id="monto" name="monto" type="text" inputmode="decimal" pattern="[0-9]+([.,][0-9]{1,2})?" placeholder="0.00" required autocomplete="off">
+            </div>
+            <span class="ayuda" id="ayuda">Máx. S/ 20.00 por transferencia · S/ 100.00 al día</span>
+          </div>
+          <div class="aviso" id="aviso" role="alert" hidden></div>
+          <button class="btn" type="submit" id="enviar">Transferir</button>
+          <button class="btn secundario" type="button" id="volver" data-ir="inicio.html" hidden>Volver al inicio</button>
+        </form>
+      </main>
+    </div>
+
+    <div class="loader on" role="status" aria-label="Cargando"><div class="spinner"></div></div>
+    <div class="indicador-inicio" aria-hidden="true"></div>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+<script>
+  var LIMITE_TX = 20;
+  var LIMITE_DIA = 100;
+
+  var contacto = BD.get('contacto', { nombre: 'Ana Torres', iniciales: 'AT', color: 'rosa' });
+  document.getElementById('nombre').textContent = contacto.nombre;
+  var avatar = document.getElementById('avatar');
+  avatar.textContent = contacto.iniciales;
+  if (contacto.color) { avatar.classList.add(contacto.color); }
+
+  var gastoHoy = BD.get('gastoHoy', 0);
+  document.getElementById('ayuda').textContent =
+    'Máx. ' + BD.soles(LIMITE_TX) + ' por transferencia · hoy llevas ' + BD.soles(gastoHoy) + ' de ' + BD.soles(LIMITE_DIA);
+
+  var aviso = document.getElementById('aviso');
+  function error(texto) { aviso.textContent = texto; aviso.hidden = false; }
+
+  // Caso de prueba: las transferencias a Luis Paredes siempre fallan por un error del banco
+  var CONTACTO_CON_FALLA = 'Luis Paredes';
+  var CONTACTO_NO_AFILIADO = 'María Quispe';
+  var MAX_INTENTOS = 4;
+  var claveIntentos = 'intentosBanco';
+
+  function bloquear() {
+    error('Ya no se puede intentar más. Superaste el número de reintentos permitidos. Intenta nuevamente más tarde.');
+    document.getElementById('monto').disabled = true;
+    document.getElementById('enviar').hidden = true;
+    document.getElementById('ayuda').hidden = true;
+    document.getElementById('volver').hidden = false;
+  }
+  if (contacto.nombre === CONTACTO_CON_FALLA && BD.get(claveIntentos, 0) >= MAX_INTENTOS) { bloquear(); }
+
+  document.getElementById('monto').addEventListener('input', function () { aviso.hidden = true; });
+
+  document.getElementById('form').addEventListener('enviado', function () {
+    var monto = Math.round(parseFloat(document.getElementById('monto').value.replace(',', '.')) * 100) / 100;
+    var saldo = BD.get('saldo', 1250);
+
+    if (!(monto > 0)) { return error('Ingresa un monto mayor a cero.'); }
+    if (monto > LIMITE_TX) { return error('El monto por transferencia no puede superar ' + BD.soles(LIMITE_TX) + '.'); }
+    if (gastoHoy + monto > LIMITE_DIA) {
+      return error('Superarías el límite diario de ' + BD.soles(LIMITE_DIA) + '. Hoy te quedan ' + BD.soles(LIMITE_DIA - gastoHoy) + '.');
+    }
+    if (monto > saldo) { return error('No tienes saldo suficiente.'); }
+
+    // Caso de prueba: María Quispe no está afiliada, el banco siempre rechaza la operación
+    if (contacto.nombre === CONTACTO_NO_AFILIADO) {
+      return error('El banco rechazó la operación: ' + contacto.nombre + ' no está afiliada. No se puede transferir a este contacto.');
+    }
+
+    if (contacto.nombre === CONTACTO_CON_FALLA) {
+      var intentos = BD.get(claveIntentos, 0) + 1;
+      BD.set(claveIntentos, intentos);
+      if (intentos >= MAX_INTENTOS) { return bloquear(); }
+      return error('Error en el banco: no pudimos procesar tu transferencia. Puedes reintentar (te quedan ' + (MAX_INTENTOS - intentos) + ' ' + (MAX_INTENTOS - intentos === 1 ? 'reintento' : 'reintentos') + ').');
+    }
+
+    BD.set('saldo', Math.round((saldo - monto) * 100) / 100);
+    BD.set('gastoHoy', Math.round((gastoHoy + monto) * 100) / 100);
+    BD.set('operacion', {
+      monto: monto,
+      para: contacto.nombre,
+      fecha: new Date().toLocaleString('es-PE', { dateStyle: 'short', timeStyle: 'short' }),
+      codigo: 'OP-' + String(Math.floor(100000 + Math.random() * 900000))
+    });
+    window.location.href = 'exito.html';
+  });
+</script>
+</body>
+</html>

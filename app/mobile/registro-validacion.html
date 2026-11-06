@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Billetera Digital · Registro: validación</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="telefono">
+  <div class="pantalla">
+    <div class="isla"></div>
+    <div class="barra-estado" aria-hidden="true">
+      <span data-hora>9:41</span>
+      <span class="iconos">
+        <svg viewBox="0 0 24 24"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/><path d="M6 11v2"/><path d="M10 11v2"/><path d="M14 11v2"/></svg>
+      </span>
+    </div>
+
+    <div class="app">
+      <div class="topbar">
+        <h1>Registro</h1>
+        <span class="chip">Paso 3 de 3</span>
+      </div>
+      <div class="pasos" aria-hidden="true"><i class="hecho"></i><i class="hecho"></i><i class="hecho"></i></div>
+
+      <main class="main">
+        <div>
+          <h2 class="titulo" id="titulo">Validando tu rostro…</h2>
+          <p class="subtitulo" id="detalle">Esto tomará unos segundos</p>
+        </div>
+
+        <div class="visor rostro escaneando" id="visor">
+          <div class="marco">
+            <svg class="ico-base" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+            <svg class="ico-ok" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <svg class="ico-err" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </div>
+          <div class="barrido"></div>
+          <div class="estado" id="estado">Comparando con tu DNI…</div>
+        </div>
+
+        <div class="acciones">
+          <button class="btn" type="button" id="valido" data-ir="crear-clave.html" hidden>Continuar</button>
+          <button class="btn rosa" type="button" id="invalido" data-ir="registro-rostro.html" hidden>Intentar de nuevo</button>
+        </div>
+      </main>
+    </div>
+
+    <div class="loader on" role="status" aria-label="Cargando"><div class="spinner"></div></div>
+    <div class="indicador-inicio" aria-hidden="true"></div>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+<script>
+  // Para mostrar el caso de error en la demo: registro-validacion.html?simular=invalido
+  var esValido = new URLSearchParams(location.search).get('simular') !== 'invalido';
+  var visor = document.getElementById('visor');
+  setTimeout(function () {
+    visor.classList.remove('escaneando');
+    visor.classList.add(esValido ? 'listo' : 'error');
+    document.getElementById('titulo').textContent = esValido ? '¡Rostro válido!' : 'No pudimos validar tu rostro';
+    document.getElementById('detalle').textContent = esValido ? 'Tu identidad fue verificada con éxito' : 'Mejora la luz y vuelve a intentarlo';
+    document.getElementById('estado').textContent = esValido ? 'Coincide con tu DNI' : 'No coincide con tu DNI';
+    document.getElementById(esValido ? 'valido' : 'invalido').hidden = false;
+  }, 2700);
+</script>
+</body>
+</html>
